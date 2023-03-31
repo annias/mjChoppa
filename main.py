@@ -1,50 +1,49 @@
 import os
 from PIL import Image
 
-# Get current directory
-current_dir = os.getcwd()
+# Define input and output directories
+input_dir = "input"
+output_dir = "output1"
 
-# Define output folder name
-output_folder = "output1"
-output_folder_exists = True
-folder_count = 0
+# Check if output directory already exists, and increment number if it does
+if os.path.isdir(output_dir):
+    count = 1
+    while True:
+        new_dir = output_dir + str(count)
+        if os.path.isdir(new_dir):
+            count += 1
+        else:
+            output_dir = new_dir
+            break
 
-# Check if output folder exists, increment count if it does
-while output_folder_exists:
-    folder_count += 1
-    output_folder_check = output_folder + str(folder_count)
-    if os.path.isdir(os.path.join(current_dir, output_folder_check)):
-        continue
-    else:
-        output_folder = output_folder_check
-        output_folder_exists = False
+# Create output directory
+os.makedirs(output_dir)
 
-# Create output folder
-os.makedirs(output_folder)
+# Loop through all png and webp files in input directory
+for filename in os.listdir(input_dir):
+    if filename.endswith(".png") or filename.endswith(".webp"):
 
-# Scan directory for png files
-png_files = [f for f in os.listdir(current_dir) if f.endswith('.png')]
+        # Open the image and get its size and aspect ratio
+        img = Image.open(os.path.join(input_dir, filename))
+        width, height = img.size
+        img_aspect_ratio = round(float(width) / float(height), 2)
 
-# Define image dimensions
-img_width = 900
-img_height = 600
+        # Calculate dimensions of 4 images based on aspect ratio
+        new_width = int(width / 2)
+        new_height = int(new_width / img_aspect_ratio)
 
-# Loop through png files and create cropped images
-for file in png_files:
-    # Open image and get dimensions
-    img_path = os.path.join(current_dir, file)
-    with Image.open(img_path) as im:
-        width, height = im.size
+        # Crop the image and save 4 new images
+        for i in range(4):
+            if i == 0:
+                box = (0, 0, new_width, new_height)
+            elif i == 1:
+                box = (new_width, 0, width, new_height)
+            elif i == 2:
+                box = (0, new_height, new_width, height)
+            elif i == 3:
+                box = (new_width, new_height, width, height)
+            img_crop = img.crop(box)
+            new_filename = os.path.splitext(filename)[0] + str(i + 1) + os.path.splitext(filename)[1]
+            img_crop.save(os.path.join(output_dir, new_filename))
 
-        # Calculate dimensions for 4 cropped images
-        crop_width = int(width / 2)
-        crop_height = int(height / 2)
-
-        # Crop images and save them
-        for i, coords in enumerate([(0, 0), (crop_width, 0), (0, crop_height), (crop_width, crop_height)]):
-            x, y = coords
-            cropped_img = im.crop((x, y, x + crop_width, y + crop_height))
-            cropped_img.save(os.path.join(output_folder, f"{os.path.splitext(file)[0]}_{i + 1}.png"))
-
-# Done chopping broccoli
 print("Done chopping broccoli.")

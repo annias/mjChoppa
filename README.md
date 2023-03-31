@@ -1,6 +1,6 @@
 # mjChoppa
 
-mjChoppa is a Python program that scans a directory for PNG and WEBP images, determines their aspect ratio, and then crops them into four 3:2 aspect ratio images in the configuration of two on top and two on bottom. The output images are saved in a new directory with the same name as the original image but with "1", "2", "3", or "4" appended as a suffix. If the output directory name already exists, the program increments the number by 1 until it finds an available directory name.
+mjChoppa is a Python program that scans a directory for PNG and WEBP images, determines their aspect ratio, and then crops them into four images in the configuration of two on top and two on bottom. The output images are saved in a new directory with the same name as the original image but with "1", "2", "3", or "4" appended as a suffix. If the output directory name already exists, the program increments the number by 1 until it finds an available directory name.
 
 ## Installation
 
