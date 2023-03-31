@@ -19,6 +19,10 @@ mjChoppa is a Python program that scans a directory for PNG and WEBP images, det
 - Python 3.x
 - Pillow (PIL) 8.x.x
 
+## Annias art and socials
+
+You can find more of my art and social links on my linktree: https://linktr.ee/annias
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
