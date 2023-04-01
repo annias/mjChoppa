@@ -1,9 +1,14 @@
 import os
+from tkinter import filedialog, Tk
 from PIL import Image
 
-# Define input and output directories
-input_dir = "input"
-output_dir = "output1"
+# Ask the user to select a directory
+root = Tk()
+root.withdraw()
+folder_path = filedialog.askdirectory()
+
+# Define output directory
+output_dir = os.path.join(folder_path, "chopped")
 
 # Check if output directory already exists, and increment number if it does
 if os.path.isdir(output_dir):
@@ -20,11 +25,11 @@ if os.path.isdir(output_dir):
 os.makedirs(output_dir)
 
 # Loop through all png and webp files in input directory
-for filename in os.listdir(input_dir):
-    if filename.endswith(".png") or filename.endswith(".webp"):
+for filename in os.listdir(folder_path):
+    if filename.endswith(".png") or filename.endswith(".webm"):
 
         # Open the image and get its size and aspect ratio
-        img = Image.open(os.path.join(input_dir, filename))
+        img = Image.open(os.path.join(folder_path, filename))
         width, height = img.size
         img_aspect_ratio = round(float(width) / float(height), 2)
 
@@ -46,4 +51,4 @@ for filename in os.listdir(input_dir):
             new_filename = os.path.splitext(filename)[0] + str(i + 1) + os.path.splitext(filename)[1]
             img_crop.save(os.path.join(output_dir, new_filename))
 
-print("Done chopping broccoli.")
+print("Done chopping files.")
