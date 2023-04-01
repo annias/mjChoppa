@@ -26,3 +26,16 @@ You can find more of my art and social links on my linktree: https://linktr.ee/a
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## Acknowledgements
+## Pillow (PIL) Library
+## Python
+
+## Changelog
+## Made first iteration of the program, works
+## Modified to modify png and webp files
+## Added support for multiple input files
+## Added support for multiple output directories
+## Added support for multiple aspect ratios
+
+### 1.0.2
